@@ -6,9 +6,13 @@ class window.Hand extends Backbone.Collection
   hit: ->
     @add(@deck.pop())
 
-  hasAce: -> @reduce (memo, card) ->
-    memo or card.get('value') is 1
-  , 0
+  stand: ->
+
+
+  hasAce: ->
+    @reduce (memo, card) ->
+      memo or card.get('value') is 1
+    , 0
 
   minScore: -> @reduce (score, card) ->
     score + if card.get 'revealed' then card.get 'value' else 0
