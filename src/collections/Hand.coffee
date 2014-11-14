@@ -7,6 +7,8 @@ class window.Hand extends Backbone.Collection
     @add(@deck.pop())
 
   stand: ->
+    console.log('triggered stand event')
+    @trigger('stand', @)
 
 
   hasAce: ->
@@ -17,6 +19,13 @@ class window.Hand extends Backbone.Collection
   minScore: -> @reduce (score, card) ->
     score + if card.get 'revealed' then card.get 'value' else 0
   , 0
+
+  maxScore: ->
+    scores = @scores()
+    if scores[1] <= 21 && scores[1] > scores[0]
+      scores[1]
+    else
+      scores[0]
 
   scores: ->
     # The scores are an array of potential scores.

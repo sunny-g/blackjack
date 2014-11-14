@@ -5,6 +5,7 @@ class window.HandView extends Backbone.View
 
   initialize: ->
     @collection.on 'add remove change', => @render()
+    # @collection.on 'stand', => @render()
     @render()
 
   render: ->
@@ -15,9 +16,10 @@ class window.HandView extends Backbone.View
     that = this
     @$('.score').text ->
       scores = that.collection.scores()
-      console.log(scores)
-      if scores[1] != scores[0]
+      # console.log(scores)
+      if scores[1] != scores[0] && scores[1] <= 21
         '' + scores[0] + ' (' + scores[1] + ')'
       else
         '' + scores[0]
+      # that.collection.maxScore()
 
