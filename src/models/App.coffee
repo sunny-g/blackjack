@@ -33,6 +33,8 @@ class window.App extends Backbone.Model
       @roundOver(['You', 'Dealer', dealerScore])
     else if playerScore > dealerScore || dealerScore > 21
       @roundOver(['Dealer', 'You', playerScore])
+    else
+      console.log('there was a tie, INSERT BETTER CODE HERE')
 
 
   roundOver: (arr) ->
