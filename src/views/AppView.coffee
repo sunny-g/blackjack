@@ -1,4 +1,6 @@
 class window.AppView extends Backbone.View
+  model: App
+
   template: _.template '
     <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
     <div class="player-hand-container"></div>
@@ -10,6 +12,8 @@ class window.AppView extends Backbone.View
     'click .stand-button': -> @model.get('playerHand').stand()
 
   initialize: ->
+    @.model.on 'newHand', (e) ->
+      console.log('appview heard a newHand event', e)
     @render()
 
   render: ->
