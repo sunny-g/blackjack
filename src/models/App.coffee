@@ -6,10 +6,7 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
 
-#   @get 'playerHand' on 'stand', ->
-#     console.log('heard stand event from handmodel')
     `this.listenTo(this.get('playerHand'), 'stand', this.stand);`
-
     @
 
   stand: (playerHand) ->
@@ -17,9 +14,8 @@ class window.App extends Backbone.Model
     dealerHand = @get 'dealerHand'
     console.log('heard stand event from handmodel')
     dealerHand.models[0].set 'revealed', true
-    while dealerHand.maxScore() < 15
+    while dealerHand.maxScore() < 17
       # insert some animation to make dealing cards not so instantaneous
       dealerHand.hit()
-    
     @
 

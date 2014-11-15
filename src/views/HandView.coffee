@@ -4,7 +4,14 @@ class window.HandView extends Backbone.View
   template: _.template '<h2><% if(isDealer){ %>Dealer<% }else{ %>You<% } %> : <span class="score"></span></h2>'
 
   initialize: ->
-    @collection.on 'add remove change', => @render()
+    # @collection.on 'add remove change', => @render
+    `this.collection.on('add remove', function(card) {
+      // this.render();
+      this.renderNewCard(card);
+      console.log('rendering on changeevent', card)
+    }, this);
+    `
+    @collection.on 'change', => @render()
     # @collection.on 'stand', => @render()
     @render()
 
@@ -13,13 +20,23 @@ class window.HandView extends Backbone.View
     @$el.html @template @collection
     @$el.append @collection.map (card) ->
       new CardView(model: card).$el
-    that = this
+    @updateScore()
+    @
+
+  renderNewCard: (card) ->
+    @$el.append new CardView(model: card).$el
+    @updateScore()
+    @
+
+  updateScore: ->
+    that = @
     @$('.score').text ->
-      scores = that.collection.scores()
+      hand = that.collection
       # console.log(scores)
-      if scores[1] != scores[0] && scores[1] <= 21
-        '' + scores[0] + ' (' + scores[1] + ')'
+      if hand.minScore() != hand.maxScore()
+        '' + hand.minScore() + ' (' + hand.maxScore() + ')'
       else
-        '' + scores[0]
+        '' + hand.minScore()
       # that.collection.maxScore()
+    @
 
