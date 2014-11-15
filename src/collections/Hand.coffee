@@ -10,20 +10,13 @@ class window.Hand extends Backbone.Collection
     console.log('triggered stand event')
     @trigger('stand', @)
 
-  endRoundTest: (card) ->
-    if card.collection.get('isDealer') is true
-      handOwner = 'Dealer'
-      otherPlayer = 'You'
-    else
-      handOwner = 'You'
-      otherPlayer = 'Dealer'
-
+  bustTest: (card) ->
     score = card.collection.maxScore();
-    console.log('on add, our hand is:', score)
-
+    console.log('bustTest called from handview, score is', score)
+#    console.log('on add, ' + handOwner + '\'s hand is:', score)
     if score > 21
       # buster, winner, card
-      @trigger('roundOver', [handOwner, otherPlayer, card])
+      @trigger('bust', card)
 
   hasAce: ->
     @reduce (memo, card) ->

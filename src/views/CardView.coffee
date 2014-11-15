@@ -7,6 +7,7 @@ class window.CardView extends Backbone.View
 
   initialize: ->
     @render().$el.fadeIn(800)
+#    @render()
 
   render: ->
     @$el.children().detach()

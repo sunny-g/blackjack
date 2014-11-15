@@ -7,7 +7,8 @@ class window.HandView extends Backbone.View
     # @collection.on 'add remove change', => @render
     `var that = this;
     this.collection.on('add remove', function(card) {
-      this.renderNewCard(card, that.collection.endRoundTest);
+      that.renderNewCard(card);
+      that.collection.bustTest(card);
     }, this);
     `
 
@@ -23,10 +24,10 @@ class window.HandView extends Backbone.View
     @renderScore()
     @
 
-  renderNewCard: (card, callback) ->
+  renderNewCard: (card) ->
     @$el.append new CardView(model: card).$el
     @renderScore()
-    callback.call(@.collection, card)
+#    callback.call(@.collection, card)
     @
 
   renderScore: ->
