@@ -15,7 +15,6 @@ class window.App extends Backbone.Model
     console.log('heard stand event from handmodel')
     dealerHand.models[0].set 'revealed', true
     while dealerHand.maxScore() < 17
-      # insert some animation to make dealing cards not so instantaneous
       dealerHand.hit()
     @
 
