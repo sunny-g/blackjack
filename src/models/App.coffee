@@ -43,6 +43,11 @@ class window.App extends Backbone.Model
 #    console.log('triggering newHand', @)
     @set('playerHand', @get('deck').dealPlayer())
     @set('dealerHand', @get('deck').dealDealer())
+    that = @
+    `that.listenTo(that.get('playerHand'), 'stand', that.stand);
+    that.listenTo(that.get('playerHand'), 'bust', that.roundOver);
+    that.listenTo(that.get('dealerHand'), 'bust', that.roundOver);
+     // this.on('bust', this.bust, this);`
 #    console.log('round is over, this is what we got:', arr)
     @trigger('displayWinner', arr)
     @
