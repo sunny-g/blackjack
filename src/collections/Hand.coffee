@@ -9,6 +9,7 @@ class window.Hand extends Backbone.Collection
   stand: ->
     console.log('triggered stand event')
     @trigger('stand', @)
+    @
 
   bustTest: (card) ->
     score = card.collection.maxScore();
@@ -17,6 +18,7 @@ class window.Hand extends Backbone.Collection
     if score > 21
       # buster, winner, card
       @trigger('bust', card)
+    @
 
   hasAce: ->
     @reduce (memo, card) ->

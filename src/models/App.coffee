@@ -9,8 +9,12 @@ class window.App extends Backbone.Model
     `this.listenTo(this.get('playerHand'), 'stand', this.stand);
     this.listenTo(this.get('playerHand'), 'bust', this.roundOver);
     this.listenTo(this.get('dealerHand'), 'bust', this.roundOver);
-     // this.on('bust', this.bust, this);`
+    `
+#    @get('playerHand').on('all', @playerEvents, @)
     @
+
+#  playerEvents: ->
+#    @
 
   stand: (playerHand) ->
     dealerHand = @get 'dealerHand'
@@ -18,38 +22,38 @@ class window.App extends Backbone.Model
     dealerHand.models[0].set 'revealed', true
     while dealerHand.maxScore() < 17
       dealerHand.hit()
-    @roundOverTest()
+    @roundOver()
     @
 
-  roundOverTest: (hand) ->
+  roundOver: (hand) ->
     # only called on stand
     console.log('heard bust event from handmodel')
     dealerHand = @get 'dealerHand'
     playerHand = @get 'playerHand'
-#    console.log(dealerHand.maxScore())
+    dealerHand.models[0].set 'revealed', true
     dealerScore = dealerHand.maxScore()
     playerScore = playerHand.maxScore()
-    if playerScore < dealerScore || playerScore > 21
-      @roundOver(['You', 'Dealer', dealerScore])
-    else if playerScore > dealerScore || dealerScore > 21
-      @roundOver(['Dealer', 'You', playerScore])
+    if  playerScore > 21
+      @newHand(['Dealer won!', dealerScore])
+    else if dealerScore > 21
+      @newHand(['You won!', playerScore])
+    else if playerScore > dealerScore
+      @newHand(['You won!', playerScore])
+    else if dealerScore > playerScore
+      @newHand(['Dealer won!', dealerScore])
     else
-      console.log('there was a tie, INSERT BETTER CODE HERE')
-
-
-  roundOver: (arr) ->
-#    console.log('round is over, this is what we got:', arr)
-    @newHand(arr)
+#      console.log('there was a tie, INSERT BETTER CODE HERE')
+      @newHand(['Push!', playerScore])
+    @
 
   newHand: (arr) ->
-#    console.log('triggering newHand', @)
     @set('playerHand', @get('deck').dealPlayer())
     @set('dealerHand', @get('deck').dealDealer())
     that = @
     `that.listenTo(that.get('playerHand'), 'stand', that.stand);
     that.listenTo(that.get('playerHand'), 'bust', that.roundOver);
     that.listenTo(that.get('dealerHand'), 'bust', that.roundOver);
-     // this.on('bust', this.bust, this);`
-#    console.log('round is over, this is what we got:', arr)
+    `
+    console.log('newHand(), this is what we got:', arr)
     @trigger('displayWinner', arr)
     @

@@ -18,9 +18,12 @@ class window.AppView extends Backbone.View
       console.log('appview heard a displayWinner event', endArr)
       _.delay(that.displayWinner, 800, endArr)
     @render()
+    @
 
   displayWinner: (arr) ->
-    alert(arr[1] + ' won!')
+    alert(arr[0])
+    @render()
+    @
 
   render: ->
     @$el.children().detach()
