@@ -23,12 +23,12 @@ class window.App extends Backbone.Model
 
   roundOver: (arr) ->
     # needs to trigger AppView
-    alert(arr[1] + ' won!')
+    console.log(arr[1] + ' won!')
     @newHand()
 
   newHand: ->
     console.log('triggering newHand', @)
+    @set('playerHand', @get('deck').dealPlayer())
+    @set('dealerHand', @get('deck').dealDealer())
     @trigger('newHand', @)
-    @set 'playerHand', @get('deck').dealPlayer()
-    @set 'dealerHand', @get('deck').dealDealer()
     @
